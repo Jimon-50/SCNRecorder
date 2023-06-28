@@ -86,8 +86,8 @@ extension RealityKitViewController: Controllable {
     realityView.takePhoto(completionHandler: handler)
   }
 
-  func startVideoRecording(size: CGSize) throws -> VideoRecording {
-    try realityView.startVideoRecording(size: size)
+  func startVideoRecording(size: CGSize, metadata: [AVMetadataItem]?) throws -> VideoRecording {
+    try realityView.startVideoRecording(size: size, metadata: metadata)
   }
 
   func finishVideoRecording(handler: @escaping (URL) -> Void) {

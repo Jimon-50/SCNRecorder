@@ -27,6 +27,7 @@ import Foundation
 import UIKit
 import AVFoundation
 import SceneKit
+import AVKit
 
 private var videoRecordingKey: UInt8 = 0
 
@@ -108,6 +109,7 @@ public extension SelfRecordable {
         url: url,
         videoSettings: videoSettings,
         audioSettings: AudioSettings().outputSettings,
+        metadata: [],
         queue: queue
       )
 
@@ -135,9 +137,10 @@ public extension SelfRecordable {
   @discardableResult
   func startVideoRecording(
     fileType: VideoSettings.FileType = .mov,
-    size: CGSize? = nil
+    size: CGSize? = nil,
+    metadata: [AVMetadataItem]? = nil
   ) throws -> VideoRecording {
-    try startVideoRecording(videoSettings: VideoSettings(fileType: fileType, size: size))
+    try startVideoRecording(videoSettings: VideoSettings(fileType: fileType, size: size), metadata: metadata)
   }
 
   func capturePixelBuffers(
@@ -158,7 +161,8 @@ public extension SelfRecordable {
   @discardableResult
   func startVideoRecording(
     videoSettings: VideoSettings,
-    audioSettings: AudioSettings? = nil
+    audioSettings: AudioSettings? = nil,
+    metadata: [AVMetadataItem]? = nil
   ) throws -> VideoRecording {
     return try startVideoRecording(
       to: FileManager.default.temporaryDirectory.appendingPathComponent(
@@ -166,7 +170,8 @@ public extension SelfRecordable {
         isDirectory: false
       ),
       videoSettings: videoSettings,
-      audioSettings: audioSettings
+      audioSettings: audioSettings,
+      metadata: metadata
     )
   }
 
@@ -174,14 +179,16 @@ public extension SelfRecordable {
   func startVideoRecording(
     to url: URL,
     videoSettings: VideoSettings,
-    audioSettings: AudioSettings? = nil
+    audioSettings: AudioSettings? = nil,
+    metadata: [AVMetadataItem]? = nil
   ) throws -> VideoRecording {
     guard videoRecording == nil else { throw SelfRecordableError.videoRecordingAlreadyStarted }
 
     let videoRecording = try assertedRecorder().makeVideoRecording(
       to: url,
       videoSettings: videoSettings,
-      audioSettings: audioSettings
+      audioSettings: audioSettings,
+      metadata: metadata
     )
     videoRecording.resume()
 

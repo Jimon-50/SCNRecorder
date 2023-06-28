@@ -26,6 +26,8 @@
 import Foundation
 import UIKit
 import SCNRecorder
+import AVKit
+import CoreLocation
 
 protocol ControlsViewControllerDelegate: AnyObject {
 
@@ -90,11 +92,23 @@ final class ControlsViewController: ViewController {
       }
     }
   }
+  
+  private func createLocationMetadata(location: CLLocation) -> AVMetadataItem {
+      let metadata = AVMutableMetadataItem()
+      metadata.keySpace = AVMetadataKeySpace.quickTimeMetadata
+      metadata.key = AVMetadataKey.quickTimeMetadataKeyLocationISO6709 as NSString
+      metadata.identifier = AVMetadataIdentifier.quickTimeMetadataLocationISO6709
+      metadata.value = String(format: "%+09.5f%+010.5f%+.0fCRSWGS_84", location.coordinate.latitude, location.coordinate.longitude, location.altitude) as NSString
+      
+     return metadata
+  }
 
   func startVideoRecording() {
     do {
       let size = CGSize(width: 720, height: 1280)
-      let videoRecording = try viewController.startVideoRecording(size: size)
+      let location = CLLocation(latitude: 35.0, longitude: 135.0)
+      let metadata:[AVMetadataItem] = [createLocationMetadata(location: location)]    // add location metadata
+      let videoRecording = try viewController.startVideoRecording(size: size, metadata: metadata)
 
       let formatted: (TimeInterval) -> String = {
         let seconds = Int($0)

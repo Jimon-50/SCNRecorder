@@ -26,6 +26,7 @@
 import UIKit
 import ARKit
 import SCNRecorder
+import AVKit
 
 final class ARKitViewController: ViewController {
 
@@ -79,8 +80,8 @@ extension ARKitViewController: Controllable {
     sceneView.takePhoto(completionHandler: handler)
   }
 
-  func startVideoRecording(size: CGSize) throws -> VideoRecording {
-    try sceneView.startVideoRecording(size: size)
+  func startVideoRecording(size: CGSize, metadata: [AVMetadataItem]?) throws -> VideoRecording {
+    try sceneView.startVideoRecording(size: size, metadata: metadata)
   }
 
   func finishVideoRecording(handler: @escaping (URL) -> Void) {

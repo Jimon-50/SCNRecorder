@@ -26,12 +26,13 @@
 import Foundation
 import UIKit
 import SCNRecorder
+import AVKit
 
 protocol Controllable {
 
   func takePhoto(handler: @escaping (UIImage) -> Void)
 
-  func startVideoRecording(size: CGSize) throws -> VideoRecording
+  func startVideoRecording(size: CGSize, metadata: [AVMetadataItem]?) throws -> VideoRecording
 
   func finishVideoRecording(handler: @escaping (URL) -> Void)
 }

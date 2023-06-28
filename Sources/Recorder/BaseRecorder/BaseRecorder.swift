@@ -26,6 +26,7 @@
 import Foundation
 import CoreMedia
 import ARKit
+import AVKit
 
 public class BaseRecorder: NSObject {
 
@@ -59,12 +60,14 @@ public class BaseRecorder: NSObject {
   public func makeVideoRecording(
     to url: URL,
     videoSettings: VideoSettings,
-    audioSettings: AudioSettings?
+    audioSettings: AudioSettings?,
+    metadata: [AVMetadataItem]?
   ) throws -> VideoRecording {
     try mediaSession.makeVideoRecording(
       to: url,
       videoSettings: videoSettings,
-      audioSettings: audioSettings
+      audioSettings: audioSettings,
+      metadata: metadata
     )
   }
 

@@ -140,7 +140,8 @@ extension MediaSession {
   func makeVideoRecording(
     to url: URL,
     videoSettings: VideoSettings = VideoSettings(),
-    audioSettings: AudioSettings? = nil
+    audioSettings: AudioSettings? = nil,
+    metadata: [AVMetadataItem]? = nil
   ) throws -> VideoRecording {
     var videoSettings = videoSettings
     if videoSettings.size == nil { videoSettings.size = videoInput.size }
@@ -156,6 +157,7 @@ extension MediaSession {
       url: url,
       videoSettings: videoSettings,
       audioSettings: audioSettingsDictionary,
+      metadata: metadata,
       queue: queue
     )
 

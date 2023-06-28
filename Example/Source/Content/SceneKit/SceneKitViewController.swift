@@ -76,8 +76,8 @@ extension SceneKitViewController: Controllable {
     sceneView.takePhoto(completionHandler: handler)
   }
 
-  func startVideoRecording(size: CGSize) throws -> VideoRecording {
-    try sceneView.startVideoRecording(size: size)
+  func startVideoRecording(size: CGSize, metadata: [AVMetadataItem]?) throws -> VideoRecording {
+    try sceneView.startVideoRecording(size: size, metadata: metadata)
   }
 
   func finishVideoRecording(handler: @escaping (URL) -> Void) {

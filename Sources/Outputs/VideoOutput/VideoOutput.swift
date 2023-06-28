@@ -59,6 +59,7 @@ final class VideoOutput {
     url: URL,
     videoSettings: VideoSettings,
     audioSettings: [String: Any]?,
+    metadata: [AVMetadataItem]?,
     queue: DispatchQueue
   ) throws {
     self.queue = queue
@@ -72,6 +73,10 @@ final class VideoOutput {
 
         try self.addVideoInput(videoSettings)
         try self.addAudioInput(audioSettings)
+          
+        if metadata != nil {
+            self.assetWriter.metadata = metadata! 
+        }
 
         guard self.assetWriter.startWriting() else {
           throw self.assetWriter.error ?? Error.cantStartWriting

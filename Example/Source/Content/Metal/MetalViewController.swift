@@ -94,8 +94,8 @@ extension MetalViewController: Controllable {
     metalView.takePhoto(completionHandler: handler)
   }
 
-  func startVideoRecording(size: CGSize) throws -> VideoRecording {
-    try metalView.startVideoRecording(size: size)
+  func startVideoRecording(size: CGSize, metadata: [AVMetadataItem]?) throws -> VideoRecording {
+    try metalView.startVideoRecording(size: size, metadata: metadata)
   }
 
   func finishVideoRecording(handler: @escaping (URL) -> Void) {
